@@ -3,10 +3,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
+const { DB_STRING } = require('./options');
 const app = express();
 
-MongoClient.connect('connection-string', (err, client) => {
+MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
     //something here...
+    if (err) return console.error(err);
+    console.log('Connected to Database');
+    const db = client.db('star-wars');
 })
 
 app.use(bodyParser.urlencoded({ extended: true}));
