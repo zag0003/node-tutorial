@@ -21,7 +21,12 @@ MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
     })
 
     app.get('/', (req, res) => {
-        res.sendFile(`${__dirname}/index.html`);
+        const cursor = db.collection('quotes').find().toArray()
+            .then(results => {
+                console.log(results)
+            })
+            .catch(error => console.error(error))
+        //res.sendFile(`${__dirname}/index.html`);
     })
 
     app.post('/quotes', (req, res) => {
