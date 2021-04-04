@@ -15,6 +15,7 @@ MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
 
 
     app.use(bodyParser.urlencoded({ extended: true}));
+    app.set('view engine', 'ejs');
 
     app.listen(3000, function() {
         console.log('listening on port 3000');
@@ -23,10 +24,11 @@ MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
     app.get('/', (req, res) => {
         const cursor = db.collection('quotes').find().toArray()
             .then(results => {
-                console.log(results)
+                res.render('index.ejs', {quotes: results});
             })
             .catch(error => console.error(error))
         //res.sendFile(`${__dirname}/index.html`);
+        
     })
 
     app.post('/quotes', (req, res) => {
