@@ -13,7 +13,7 @@ MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
     const db = client.db('star-wars');
     const quotesColl = db.collection('quotes');
 
-
+    app.use(express.static('public'));
     app.use(bodyParser.urlencoded({ extended: true}));
     app.set('view engine', 'ejs');
 
