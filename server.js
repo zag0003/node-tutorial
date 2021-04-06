@@ -14,6 +14,7 @@ MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
     const quotesColl = db.collection('quotes');
 
     app.use(express.static('public'));
+    app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true}));
     app.set('view engine', 'ejs');
 
@@ -37,6 +38,10 @@ MongoClient.connect(DB_STRING, {useUnifiedTopology: true}, (err, client) => {
                 res.redirect('/');
             })
             .catch(error => console.error(error));
+    })
+
+    app.put('/quotes', (req, res) => {
+        console.log(req.body);
     })
 })
 
