@@ -16,3 +16,29 @@ update.addEventListener('click', function (e) {
         window.location.reload();
     })
 });
+
+const deleteBtn = document.querySelector('#delete-button');
+
+const messageDiv = document.querySelector('#message');
+
+deleteBtn.addEventListener('click', function (e) {
+    fetch('/quotes', { 
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            name: 'Darth Vader'
+        })
+    })
+    .then(res => {
+        if (res.ok) return res.json();
+    })
+    .then(data => {
+        if (data === 'No quote to delete') {
+            messageDiv.textContent = 'No Vader quote to delete';
+        } else {
+            window.location.reload();
+        }
+        
+    })
+    .catch(err => console.error(err));
+})
